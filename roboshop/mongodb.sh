@@ -15,7 +15,7 @@ mongodbRepo="https://raw.githubusercontent.com/devoos-sandbox/shell-scripting/re
 appLog="/tmp/${component}.log"
 
 echo -e -n  "\e[33m Configuring Mongodb Repo: \e[0m"
-curl -sS --fail ${mongodbRepo} -o /etc/yum.repos.d/${mongodbRepo}.repo &>> ${appLog}
+curl -sS --fail ${mongodbRepo} -o /etc/yum.repos.d/${component}.repo &>> ${appLog}
 stat $?
 
 echo -e -n  "\e[33m Installing Mongodb: \e[0m"
