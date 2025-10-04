@@ -12,7 +12,7 @@ stat() {
 
 component="frontend"
 appContent="https://roboshop-artifacts.s3.amazonaws.com/${component}-v3.zip"
-url="https://raw.githubusercontent.com/devoos-sandbox/shell-scripting/refs/heads/main/roboshop"
+url="https://raw.githubusercontent.com/devoos-sandbox/shell-scripting/refs/heads/main/roboshop/nginx.conf"
 appLog="/tmp/${component}.log"
 
 echo -e -n "\e[33m Disabling default nginx: \e[0m"
