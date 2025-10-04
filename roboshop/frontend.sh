@@ -38,7 +38,8 @@ unzip /tmp/frontend.zip &>> /tmp/frontend.log
 rm -f /etc/nginx/nginx.conf &>> /tmp/frontend.log
 
 echo -e "\e[33m Updating nginx Proxy: \e[0m"
-curl https://raw.githubusercontent.com/devoos-sandbox/shell-scripting/refs/heads/main/roboshop/nginx.conf >  /etc/nginx/nginx.conf
+curl -sS --fail https://raw.githubusercontent.com/devoos-sandbox/shell-scripting/refs/heads/main/roboshop/nginx.conf -o /etc/nginx/nginx.conf &>> /tmp/frontend.log
+stat $?
 
 echo -e "\e[33m Updating Frontend Configuration: \e[0m"
 systemctl restart nginx 
