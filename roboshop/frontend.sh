@@ -28,7 +28,7 @@ stat $?
 rm -rf /usr/share/nginx/html/*  &>> /tmp/frontend.log
 
 echo -e "\e[33m Downloading Frontend content: \e[0m"
-curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip
+curl -sS --fail -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip &>> /tmp/frontend.log
 stat $?
 
 cd /usr/share/nginx/html 
