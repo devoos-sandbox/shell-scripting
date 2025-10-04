@@ -10,14 +10,14 @@ stat() {
   fi
 }
 
-echo -e "\e[33m Disabling default nginx: \e[0m"
+echo -n -e "\e[33m Disabling default nginx: \e[0m"
 dnf module disable nginx -y &>> /tmp/frontend.log
 stat $?
 
 
 dnf module enable nginx:1.24 -y &>> /tmp/frontend.log
 
-echo -e "\e[33m Installing nginx: \e[0m"
+echo -e -n "\e[33m Installing nginx: \e[0m"
 dnf install nginx -y  &>> /tmp/frontend.log
 stat $?
 
