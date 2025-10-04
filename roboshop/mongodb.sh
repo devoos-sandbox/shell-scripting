@@ -22,17 +22,14 @@ echo -e -n  "\e[33m Installing Mongodb: \e[0m"
 dnf install mongodb-org -y &>> ${appLog}
 stat $?
 
-echo -e -n  "\e[33m Starting ${component}: \e[0m"
-systemctl enable mongod &>> ${appLog}
-systemctl start mongod &>> ${appLog}
-stat $?
-
-sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
+echo -e -n  "\e[33m Updating ${component} Configuration: \e[0m"
+sed -i -e 's|127.0.0.1|0.0.0.0|' /etc/mongod.conf
 systemctl daemon-reload &>> ${appLog}
 stat $?
 
-echo -e -n  "\e[33m Updating ${component} Configuration: \e[0m"
-systemctl restart mongod &>> ${appLog}
+echo -e -n  "\e[33m Starting ${component}: \e[0m"
+systemctl enable mongod &>> ${appLog}
+systemctl start mongod &>> ${appLog}
 stat $?
 
 echo -e -n  "\n\n \t \e[32m ${component} setup completed \e[0m"
