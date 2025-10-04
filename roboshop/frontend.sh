@@ -1,21 +1,29 @@
 #!/bin/bash
-dnf module disable nginx -y
-dnf module enable nginx:1.24 -y
-dnf install nginx -y
-systemctl enable nginx 
-systemctl start nginx 
 
-rm -rf /usr/share/nginx/html/* 
+echo -e "\e[33m Disabling default nginx: \e[0m"
+dnf module disable nginx -y &>> /tmp/frontend.log
+
+echo -e "\e[33m Enabliing Intended nginx version: \e[0m"
+dnf module enable nginx:1.24 -y. &>> /tmp/frontend.log
+
+echo -e "\e[33m Installing nginx: \e[0m"
+dnf install nginx -y  &>> /tmp/frontend.log
+
+systemctl enable nginx   &>> /tmp/frontend.log
+systemctl start nginx   &>> /tmp/frontend.log
+
+rm -rf /usr/share/nginx/html/*  &>> /tmp/frontend.log
 
 curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip
 
 cd /usr/share/nginx/html 
-unzip /tmp/frontend.zip
+unzip /tmp/frontend.zip &>> /tmp/frontend.log
 
 
-rm -f /etc/nginx/nginx.conf
+rm -f /etc/nginx/nginx.conf &>> /tmp/frontend.log
 
-cp ./nginx.conf /etc/nginx/default.d/nginx.conf
+cp ./nginx.conf /etc/nginx/default.d/nginx.conf 
 
-systemctl enable nginx
 systemctl restart nginx 
+
+echo -e "\e[32m Frontend setup completed \e[0m"
