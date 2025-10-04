@@ -2,10 +2,10 @@
 
 stat() {
   if [ $1 -eq 0 ]; then
-    echo -e -n "\e[32m Success \e[0m"
+    echo -n -e "\e[32m Success \e[0m"
   else
-    echo -e -n "\e[31m Failure \e[0m"
-    echo -e -n "\e[33m Check the log file /tmp/frontend.log for more information \e[0m"
+    echo -n -e "\e[31m Failure \e[0m"
+    echo -n -e "\e[33m Check the log file /tmp/frontend.log for more information \e[0m"
     exit 1
   fi
 }
