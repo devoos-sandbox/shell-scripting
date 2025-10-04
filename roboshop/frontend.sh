@@ -22,7 +22,7 @@ unzip /tmp/frontend.zip &>> /tmp/frontend.log
 
 rm -f /etc/nginx/nginx.conf &>> /tmp/frontend.log
 
-cp ./nginx.conf /etc/nginx/default.d/nginx.conf 
+curl https://raw.githubusercontent.com/devoos-sandbox/shell-scripting/refs/heads/main/roboshop/nginx.conf >  /etc/nginx/default.d/nginx.conf 
 
 systemctl restart nginx 
 
