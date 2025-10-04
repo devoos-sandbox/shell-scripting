@@ -44,7 +44,7 @@ unzip /tmp/${component}.zip &>> ${appLog}
 rm -f /etc/nginx/nginx.conf &>> ${appLog}
 
 echo -e -n  "\e[33m Updating nginx Proxy: \e[0m"
-curl -sS --fail ${url} -o /etc/nginx/nginx.conf &>> ${appLog}
+curl -s ${url} &> /etc/nginx/nginx.conf &>> ${appLog}
 stat $?
 
 echo -e -n  "\e[33m Updating ${component} Configuration: \e[0m"
