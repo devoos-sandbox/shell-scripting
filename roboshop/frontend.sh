@@ -2,22 +2,22 @@
 
 stat() {
   if [ $1 -eq 0 ]; then
-    echo -n -e "\e[32m Success \e[0m"
+    echo -e "\e[32m Success \e[0m"
   else
-    echo -n -e "\e[31m Failure \e[0m"
-    echo -n -e "\e[33m Check the log file /tmp/frontend.log for more information \e[0m"
+    echo -e "\e[31m Failure \e[0m"
+    echo -e "\e[33m Check the log file /tmp/frontend.log for more information \e[0m"
     exit 1
   fi
 }
 
-echo -n -e "\e[33m Disabling default nginx: \e[0m"
+echo -e -n "\e[33m Disabling default nginx: \e[0m"
 dnf module disable nginx -y &>> /tmp/frontend.log
 stat $?
 
 
 dnf module enable nginx:1.24 -y &>> /tmp/frontend.log
 
-echo -e -n "\e[33m Installing nginx: \e[0m"
+echo -e -n  "\e[33m Installing nginx: \e[0m"
 dnf install nginx -y  &>> /tmp/frontend.log
 stat $?
 
@@ -27,7 +27,7 @@ stat $?
 
 rm -rf /usr/share/nginx/html/*  &>> /tmp/frontend.log
 
-echo -e "\e[33m Downloading Frontend content: \e[0m"
+echo -e -n  "\e[33m Downloading Frontend content: \e[0m"
 curl -sS --fail -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip &>> /tmp/frontend.log
 stat $?
 
@@ -37,12 +37,12 @@ unzip /tmp/frontend.zip &>> /tmp/frontend.log
 
 rm -f /etc/nginx/nginx.conf &>> /tmp/frontend.log
 
-echo -e "\e[33m Updating nginx Proxy: \e[0m"
+echo -e -n  "\e[33m Updating nginx Proxy: \e[0m"
 curl -sS --fail https://raw.githubusercontent.com/devoos-sandbox/shell-scripting/refs/heads/main/roboshop/nginx.conf -o /etc/nginx/nginx.conf &>> /tmp/frontend.log
 stat $?
 
-echo -e "\e[33m Updating Frontend Configuration: \e[0m"
+echo -e -n  "\e[33m Updating Frontend Configuration: \e[0m"
 systemctl restart nginx 
 stat $?
 
-echo -e "\n\n \t \e[32m Frontend setup completed \e[0m"
+echo -e -n  "\n\n \t \e[32m Frontend setup completed \e[0m"
