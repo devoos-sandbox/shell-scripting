@@ -27,7 +27,11 @@ systemctl enable mongod &>> ${appLog}
 systemctl start mongod &>> ${appLog}
 stat $?
 
-set -i -e "s/127.0.0.1/0.0.0.0/g" /etc/mongod.conf
+sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
 systemctl restart mongod &>> ${appLog}
+stat $?
+
+systemctl restart mongod &>> ${appLog}
+stat $?
 
 echo -e -n  "\n\n \t \e[32m ${component} setup completed \e[0m"
