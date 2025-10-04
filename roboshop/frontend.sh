@@ -44,4 +44,4 @@ echo -e "\e[33m Updating Frontend Configuration: \e[0m"
 systemctl restart nginx 
 stat $?
 
-echo -e "\e[32m Frontend setup completed \e[0m"
+echo -e "\n\n \t \e[32m Frontend setup completed \e[0m"
