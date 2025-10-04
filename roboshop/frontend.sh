@@ -10,40 +10,45 @@ stat() {
   fi
 }
 
+component="frontend"
+appContent="https://roboshop-artifacts.s3.amazonaws.com/${component}-v3.zip"
+url="https://raw.githubusercontent.com/devoos-sandbox/shell-scripting/refs/heads/main/roboshop"
+appLog="/tmp/${component}.log"
+
 echo -e -n "\e[33m Disabling default nginx: \e[0m"
-dnf module disable nginx -y &>> /tmp/frontend.log
+dnf module disable nginx -y &>> ${appLog}
 stat $?
 
 
-dnf module enable nginx:1.24 -y &>> /tmp/frontend.log
+dnf module enable nginx:1.24 -y &>> ${appLog}
 
 echo -e -n  "\e[33m Installing nginx: \e[0m"
-dnf install nginx -y  &>> /tmp/frontend.log
+dnf install nginx -y  &>> ${appLog}
 stat $?
 
 echo -e -n  "\e[33m Starting nginx: \e[0m"
-systemctl enable nginx   &>> /tmp/frontend.log
-systemctl start nginx   &>> /tmp/frontend.log
+systemctl enable nginx   &>> ${appLog}
+systemctl start nginx   &>> ${appLog}
 stat $?
 
 rm -rf /usr/share/nginx/html/*  &>> /tmp/frontend.log
 
-echo -e -n  "\e[33m Downloading Frontend content: \e[0m"
-curl -sS --fail -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip &>> /tmp/frontend.log
+echo -e -n  "\e[33m Downloading ${component} content: \e[0m"
+curl -sS --fail -o /tmp/${component}.zip ${appContent} &>> ${appLog}
 stat $?
 
 cd /usr/share/nginx/html 
-unzip /tmp/frontend.zip &>> /tmp/frontend.log
+unzip /tmp/${component}.zip &>> ${appLog}
 
 
-rm -f /etc/nginx/nginx.conf &>> /tmp/frontend.log
+rm -f /etc/nginx/nginx.conf &>> ${appLog}
 
 echo -e -n  "\e[33m Updating nginx Proxy: \e[0m"
-curl -sS --fail https://raw.githubusercontent.com/devoos-sandbox/shell-scripting/refs/heads/main/roboshop/nginx.conf -o /etc/nginx/nginx.conf &>> /tmp/frontend.log
+curl -sS --fail ${url} -o /etc/nginx/nginx.conf &>> ${appLog}
 stat $?
 
-echo -e -n  "\e[33m Updating Frontend Configuration: \e[0m"
+echo -e -n  "\e[33m Updating ${component} Configuration: \e[0m"
 systemctl restart nginx 
 stat $?
 
-echo -e -n  "\n\n \t \e[32m Frontend setup completed \e[0m"
+echo -e -n  "\n\n \t \e[32m ${component} setup completed \e[0m"
