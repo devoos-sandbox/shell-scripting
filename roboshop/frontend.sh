@@ -21,6 +21,7 @@ echo -e -n  "\e[33m Installing nginx: \e[0m"
 dnf install nginx -y  &>> /tmp/frontend.log
 stat $?
 
+echo -e -n  "\e[33m Starting nginx: \e[0m"
 systemctl enable nginx   &>> /tmp/frontend.log
 systemctl start nginx   &>> /tmp/frontend.log
 stat $?
