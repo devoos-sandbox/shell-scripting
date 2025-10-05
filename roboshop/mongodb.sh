@@ -10,6 +10,12 @@ stat() {
   fi
 }
 
+if [ $(id -u) -ne 0 ]; then
+  echo -e "\e[31m You should be running this script as root or with sudo privileges \e[0m"
+  exit 1
+fi
+
+
 component="mongodb"
 mongodbRepo="https://raw.githubusercontent.com/devoos-sandbox/shell-scripting/refs/heads/main/roboshop/mongodb.repo"
 appLog="/tmp/${component}.log"
