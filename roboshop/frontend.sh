@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ $(id -u) -ne 0 ]; then
+  echo -e "\e[31m You should be running this script as root or with sudo privileges \e[0m"
+  exit 1
+fi
+
 stat() {
   if [ $1 -eq 0 ]; then
     echo -e "\e[32m Success \e[0m"
