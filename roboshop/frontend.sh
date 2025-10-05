@@ -1,10 +1,13 @@
 #!/bin/bash
 
-source roboshop/common.sh
-
 component="frontend"
 url="https://raw.githubusercontent.com/devoos-sandbox/shell-scripting/refs/heads/main/roboshop/nginx.conf"
 appDir="/usr/share/nginx/html/"
+appContent="https://roboshop-artifacts.s3.amazonaws.com/${component}-v3.zip"
+appLog="/tmp/${component}.log"
+appUser="roboshop"
+
+source roboshop/common.sh
 
 echo -e -n "\e[33m Disabling default nginx: \e[0m"
 dnf module disable nginx -y &>> ${appLog}

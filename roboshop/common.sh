@@ -13,11 +13,6 @@ stat() {
   fi
 }
 
-appContent="https://roboshop-artifacts.s3.amazonaws.com/${component}-v3.zip"
-appLog="/tmp/${component}.log"
-appUser="roboshop"
-appDir="/app"
-
 downloading_app_content() {
     echo -e -n  "\e[33m Downloading ${component} content: \e[0m"
     curl -sS --fail -o /tmp/${component}.zip ${appContent} &>> ${appLog}
