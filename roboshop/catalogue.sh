@@ -10,7 +10,7 @@ stat() {
   fi
 }
 
-component="frontend"
+component="catalogue"
 appContent="https://roboshop-artifacts.s3.amazonaws.com/${component}-v3.zip"
 url="https://raw.githubusercontent.com/devoos-sandbox/shell-scripting/refs/heads/main/roboshop/nginx.conf"
 appLog="/tmp/${component}.log"
@@ -18,8 +18,8 @@ appUser="roboshop"
 appContent="https://roboshop-artifacts.s3.amazonaws.com/${component}-v3.zip"
 
 echo -e -n "\e[33m Disabling default nodeVersion : \e[0m"
-dnf module disable nodejs -y &>> ${appLog}
-dnf module enable nodejs:20 -y &>> ${appLog}
+  dnf module disable nodejs -y  &>> ${appLog}
+  dnf module enable nodejs:20 -y    &>> ${appLog}
 stat $?
 
 echo -e -n  "\e[33m Installing nodejs: \e[0m"
