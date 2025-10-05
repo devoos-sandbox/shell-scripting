@@ -65,6 +65,10 @@ systemctl enable ${component}   &>> ${appLog}
 systemctl start ${component}   &>> ${appLog}
 stat $?
 
+echo -e -n  "\e[33m Configuring Mongodb Repo: \e[0m"
+curl -sS --fail ${mongodbRepo} -o /etc/yum.repos.d/${component}.repo &>> ${appLog}
+stat $?
+
 echo -e -n  "\e[33m Installing Mongodb Shell: \e[0m"
 dnf install mongodb-mongosh -y &>> ${appLog}
 stat $?
