@@ -39,11 +39,12 @@ creating_app_user() {
 
 configure_and_start_service() {
     echo -e -n "\e[33m Configuring ${component} systemd: \e[0m"
-    if [ -f "$(dirname "$0")/${component}.service" ]; then
-      cp "$(dirname "$0")/${component}.service" /etc/systemd/system/${component}.service
+    SERVICE_FILE="$(dirname "$0")/../systemd/${component}.service"
+    if [ -f "$SERVICE_FILE" ]; then
+      cp "$SERVICE_FILE" /etc/systemd/system/${component}.service
       stat $?
     else
-      echo -e "\e[31m Service file $(dirname "$0")/${component}.service not found \e[0m"
+      echo -e "\e[31m Service file $SERVICE_FILE not found \e[0m"
       exit 1
     fi
 
