@@ -48,8 +48,7 @@ cp "$(dirname "$0")/${component}.service" /etc/systemd/system/${component}.servi
 stat $?
 
 echo -e -n  "\e[33m Downloading ${component} content: \e[0m"
-# curl -sS --fail -o /tmp/${component}.zip ${appContent} &>> ${appLog}
-curl -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}-v3.zip
+curl -sS --fail -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}-v3.zip &>> ${appLog}
 cd /app
 unzip /tmp/${component}.zip &>> ${appLog}
 stat $? 
