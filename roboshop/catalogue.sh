@@ -57,7 +57,7 @@ stat $?
 
 
 echo -e -n "\e[33m Configuring ${component} systemd: \e[0m"
-cp ./${componsnt}.service /etc/systemd/system/${component}.service
+cp ./${component}.service /etc/systemd/system/${component}.service
 stat $? 
 
 echo -e -n  "\e[33m Starting ${component}: \e[0m"
