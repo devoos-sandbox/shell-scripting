@@ -20,6 +20,7 @@ downloading_app_content() {
 
     echo -e -n  "\e[33m Extracting ${component} content: \e[0m"
     rm  -rf ${appDir} &>> ${appLog}
+    mkdir ${appDir} &>> ${appLog}
     cd ${appDir}
     unzip -o /tmp/${component}.zip &>> ${appLog}
     stat $?
