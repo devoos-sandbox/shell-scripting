@@ -76,3 +76,12 @@ mongosh --host mongodb.roboshop.internal </app/db/master-data.js &>> ${appLog}
 stat $?
 
 echo -e "\n\n\t\e[32m ${component} setup completed \e[0m"
+echo -e "\e[36m------------------------------------------------------\e[0m"
+echo -e "\e[36m Service Name   : ${component}\e[0m"
+echo -e "\e[36m Log File       : ${appLog}\e[0m"
+echo -e "\e[36m App Directory  : /app\e[0m"
+echo -e "\e[36m To check status: systemctl status ${component}\e[0m"
+echo -e "\e[36m------------------------------------------------------\e[0m"
+echo -e "\e[1;33mYour ${component} service is running\e[0m"
+echo -e "\e[1;33mTo manage the ${component} service, use: systemctl [start|stop|status] ${component}\e[0m"
+echo -e "\e[1;33mCheck the log file /tmp/${component}.log for more details.\e[0m" 
