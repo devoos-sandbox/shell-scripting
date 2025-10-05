@@ -12,7 +12,6 @@ stat() {
 
 component="catalogue"
 appContent="https://roboshop-artifacts.s3.amazonaws.com/${component}-v3.zip"
-url="https://raw.githubusercontent.com/devoos-sandbox/shell-scripting/refs/heads/main/roboshop/nginx.conf"
 appLog="/tmp/${component}.log"
 appUser="roboshop"
 mongodbRepo="https://raw.githubusercontent.com/devoos-sandbox/shell-scripting/refs/heads/main/roboshop/mongodb.repo"
@@ -50,7 +49,7 @@ stat $?
 echo -e -n "\e[33m Downloading ${component} content: \e[0m"
 curl -sS --fail -o /tmp/${component}.zip ${appContent} &>> ${appLog}
 cd /app
-unzip /tmp/${component}.zip &>> ${appLog}
+unzip -o /tmp/${component}.zip &>> ${appLog}
 stat $?
 
 echo -e -n "\e[33m Installing nodejs dependencies: \e[0m"

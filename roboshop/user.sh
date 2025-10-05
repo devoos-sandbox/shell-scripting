@@ -12,7 +12,6 @@ stat() {
 
 component="user"
 appContent="https://roboshop-artifacts.s3.amazonaws.com/${component}-v3.zip"
-url="https://raw.githubusercontent.com/devoos-sandbox/shell-scripting/refs/heads/main/roboshop/nginx.conf"
 appLog="/tmp/${component}.log"
 appUser="roboshop"
 
@@ -49,7 +48,7 @@ stat $?
 echo -e -n "\e[33m Downloading ${component} content: \e[0m"
 curl -sS --fail -o /tmp/${component}.zip ${appContent} &>> ${appLog}
 cd /app
-unzip /tmp/${component}.zip &>> ${appLog}
+unzip -o /tmp/${component}.zip &>> ${appLog}
 stat $?
 
 echo -e -n "\e[33m Installing nodejs dependencies: \e[0m"
@@ -63,16 +62,10 @@ systemctl enable ${component} &>> ${appLog}
 systemctl start ${component} &>> ${appLog}
 stat $?
 
-echo -e -n "\e[33m Configuring Mongodb Repo: \e[0m"
-curl -sS --fail ${mongodbRepo} -o /etc/yum.repos.d/${component}.repo &>> ${appLog}
-stat $?
-
-echo -e -n "\e[33m Installing Mongodb Shell: \e[0m"
-dnf install mongodb-mongosh -y &>> ${appLog}
-stat $?
-
-echo -e -n "\e[32m Injecting App Schema \e[0m"
-mongosh --host mongodb.roboshop.internal </app/db/master-data.js &>> ${appLog}
-stat $?
-
 echo -e "\n\n\t\e[32m ${component} setup completed \e[0m"
+echo -e "\e[36m------------------------------------------------------\e[0m"
+echo -e "\e[36m Service Name   : ${component}\e[0m"
+echo -e "\e[36m Log File       : ${appLog}\e[0m"
+echo -e "\e[36m App Directory  : /app\e[0m"
+echo -e "\e[36m To check status: systemctl status ${component}\e[0m"
+echo -e "\e[36m------------------------------------------------------\e[0m"
