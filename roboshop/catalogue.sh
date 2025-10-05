@@ -41,7 +41,11 @@ stat $?
 
 echo -e -n  "\e[33m Creating App Directory: \e[0m"
 mkdir /app &>> ${appLog}    
-stat $? 
+stat $?
+
+echo -e -n "\e[33m Configuring ${component} systemd: \e[0m"
+cp ${component}.service /etc/systemd/system/${component}.service
+stat $?
 
 exho -e -n  "\e[33m Downloading ${component} content: \e[0m"
 # curl -sS --fail -o /tmp/${component}.zip ${appContent} &>> ${appLog}
@@ -53,11 +57,6 @@ stat $?
 echo -e -n  "\e[33m Installing nodejs dependencies: \e[0m"
 cd /app
 npm install &>> ${appLog}
-stat $?
-
-
-echo -e -n "\e[33m Configuring ${component} systemd: \e[0m"
-cp ${component}.service /etc/systemd/system/${component}.service &>> ${appLog}
 stat $?
 
 echo -e -n  "\e[33m Starting ${component}: \e[0m"
