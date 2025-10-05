@@ -18,12 +18,12 @@ echo -e -n  "\e[33m Installing nginx: \e[0m"
 dnf install nginx -y  &>> ${appLog}
 stat $?
 
-downloading_app_content
-
 echo -e -n  "\e[33m Starting nginx: \e[0m"
 systemctl enable nginx   &>> ${appLog}
 systemctl start nginx   &>> ${appLog}
 stat $?
+
+downloading_app_content
 
 echo "-e -n  "\e[33m Cleaning up proxy: \e[0m"
 >>/etc/nginx/nginx.conf &>> ${appLog}
