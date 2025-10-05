@@ -15,66 +15,65 @@ appContent="https://roboshop-artifacts.s3.amazonaws.com/${component}-v3.zip"
 url="https://raw.githubusercontent.com/devoos-sandbox/shell-scripting/refs/heads/main/roboshop/nginx.conf"
 appLog="/tmp/${component}.log"
 appUser="roboshop"
-appContent="https://roboshop-artifacts.s3.amazonaws.com/${component}-v3.zip"
 mongodbRepo="https://raw.githubusercontent.com/devoos-sandbox/shell-scripting/refs/heads/main/roboshop/mongodb.repo"
 
 echo -e -n "\e[33m Disabling default nodeVersion : \e[0m"
-  dnf module disable nodejs -y  &>> ${appLog}
-  dnf module enable nodejs:20 -y    &>> ${appLog}
+dnf module disable nodejs -y &>> ${appLog}
+dnf module enable nodejs:20 -y &>> ${appLog}
 stat $?
 
-echo -e -n  "\e[33m Installing nodejs: \e[0m"
-dnf install nodejs -y  &>> ${appLog}
+echo -e -n "\e[33m Installing nodejs: \e[0m"
+dnf install nodejs -y &>> ${appLog}
 stat $?
 
 echo -e -n "\e[33m Creating AppUser: \e[0m"
 id ${appUser} &>> ${appLog}
 if [ $? -ne 0 ]; then
-    useradd ${appUser} &>> ${appLog}
-    stat $?
+  useradd ${appUser} &>> ${appLog}
+  stat $?
 else
-    echo -e "\e[32m ${appUser} user already exists: SKIPPING \e[0m"
+  echo -e "\e[32m ${appUser} user already exists: SKIPPING \e[0m"
 fi
 
-echo -e -n  "\e[33m Cleanup of app directory: \e[0m"
+echo -e -n "\e[33m Cleanup of app directory: \e[0m"
 rm -rf /app &>> ${appLog}
 stat $?
 
-echo -e -n  "\e[33m Creating App Directory: \e[0m"
-mkdir /app &>> ${appLog}    
+echo -e -n "\e[33m Creating App Directory: \e[0m"
+mkdir /app &>> ${appLog}
 stat $?
 
 echo -e -n "\e[33m Configuring ${component} systemd: \e[0m"
 cp "$(dirname "$0")/${component}.service" /etc/systemd/system/${component}.service
 stat $?
 
-echo -e -n  "\e[33m Downloading ${component} content: \e[0m"
-curl -sS --fail -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}-v3.zip &>> ${appLog}
+echo -e -n "\e[33m Downloading ${component} content: \e[0m"
+curl -sS --fail -o /tmp/${component}.zip ${appContent} &>> ${appLog}
 cd /app
 unzip /tmp/${component}.zip &>> ${appLog}
-stat $? 
+stat $?
 
-echo -e -n  "\e[33m Installing nodejs dependencies: \e[0m"
+echo -e -n "\e[33m Installing nodejs dependencies: \e[0m"
 cd /app
 npm install &>> ${appLog}
 stat $?
 
-echo -e -n  "\e[33m Starting ${component}: \e[0m"
+echo -e -n "\e[33m Starting ${component}: \e[0m"
 systemctl daemon-reload &>> ${appLog}
-systemctl enable ${component}   &>> ${appLog}
-systemctl start ${component}   &>> ${appLog}
+systemctl enable ${component} &>> ${appLog}
+systemctl start ${component} &>> ${appLog}
 stat $?
 
-echo -e -n  "\e[33m Configuring Mongodb Repo: \e[0m"
+echo -e -n "\e[33m Configuring Mongodb Repo: \e[0m"
 curl -sS --fail ${mongodbRepo} -o /etc/yum.repos.d/${component}.repo &>> ${appLog}
 stat $?
 
-echo -e -n  "\e[33m Installing Mongodb Shell: \e[0m"
+echo -e -n "\e[33m Installing Mongodb Shell: \e[0m"
 dnf install mongodb-mongosh -y &>> ${appLog}
 stat $?
 
 echo -e -n "\e[32m Injecting App Schema \e[0m"
-mongosh --host mongodb.roboshop.internal  </app/db/master-data.js &>> ${appLog}
+mongosh --host mongodb.roboshop.internal </app/db/master-data.js &>> ${appLog}
 stat $?
 
-echo -e -n  "\n\n \t \e[32m ${component} setup completed \e[0m"
+echo -e "\n\n\t\e[32m ${component} setup completed \e[0m"
