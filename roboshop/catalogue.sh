@@ -16,6 +16,7 @@ url="https://raw.githubusercontent.com/devoos-sandbox/shell-scripting/refs/heads
 appLog="/tmp/${component}.log"
 appUser="roboshop"
 appContent="https://roboshop-artifacts.s3.amazonaws.com/${component}-v3.zip"
+mongodbRepo="https://raw.githubusercontent.com/devoos-sandbox/shell-scripting/refs/heads/main/roboshop/mongodb.repo"
 
 echo -e -n "\e[33m Disabling default nodeVersion : \e[0m"
   dnf module disable nodejs -y  &>> ${appLog}
