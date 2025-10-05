@@ -47,7 +47,7 @@ echo -e -n "\e[33m Configuring ${component} systemd: \e[0m"
 cp "$(dirname "$0")/${component}.service" /etc/systemd/system/${component}.service
 stat $?
 
-exho -e -n  "\e[33m Downloading ${component} content: \e[0m"
+echo -e -n  "\e[33m Downloading ${component} content: \e[0m"
 # curl -sS --fail -o /tmp/${component}.zip ${appContent} &>> ${appLog}
 curl -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}-v3.zip
 cd /app
