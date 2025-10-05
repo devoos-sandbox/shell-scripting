@@ -25,7 +25,7 @@ stat $?
 
 downloading_app_content
 
-echo "-e -n  "\e[33m Cleaning up proxy: \e[0m"
+echo -e -n "\e[33m Cleaning up proxy: \e[0m"
 >>/etc/nginx/nginx.conf &>> ${appLog}
 stat $?
 
