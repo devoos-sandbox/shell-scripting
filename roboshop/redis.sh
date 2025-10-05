@@ -31,7 +31,7 @@ dnf install redis -y &>> "${appLog}"
 stat $?
 
 echo -e -n "\e[33m Updating ${component} Configuration: \e[0m"
-sed -i -e 's|127.0.0.1|0.0.0.0|' /etc/redis/redis.conf
+sed -i -e 's|127.0.0.1|0.0.0.0|' -e 's|protected-mode yes|protected-mode no|' /etc/redis/redis.conf
 stat $?
 
 echo -e -n "\e[33m Starting ${component}: \e[0m"
