@@ -1,29 +1,16 @@
 #!/bin/bash
 
-if [ $(id -u) -ne 0 ]; then
-  echo -e "\e[31m You should be running this script as root or with sudo privileges \e[0m"
-  exit 1
-fi
-
-stat() {
-  if [ $1 -eq 0 ]; then
-    echo -e "\e[32m Success \e[0m"
-  else
-    echo -e "\e[31m Failure \e[0m"
-    echo -e "\e[33m Check the log file /tmp/${component}.log for more information \e[0m"
-    exit 1
-  fi
-}
+source roboshop/common.sh
 
 component="frontend"
 appContent="https://roboshop-artifacts.s3.amazonaws.com/${component}-v3.zip"
 url="https://raw.githubusercontent.com/devoos-sandbox/shell-scripting/refs/heads/main/roboshop/nginx.conf"
 appLog="/tmp/${component}.log"
+appDir="/usr/share/nginx/html/*"
 
 echo -e -n "\e[33m Disabling default nginx: \e[0m"
 dnf module disable nginx -y &>> ${appLog}
 stat $?
-
 
 dnf module enable nginx:1.24 -y &>> ${appLog}
 
@@ -31,22 +18,16 @@ echo -e -n  "\e[33m Installing nginx: \e[0m"
 dnf install nginx -y  &>> ${appLog}
 stat $?
 
+downloading_app_content
+
 echo -e -n  "\e[33m Starting nginx: \e[0m"
 systemctl enable nginx   &>> ${appLog}
 systemctl start nginx   &>> ${appLog}
 stat $?
 
-rm -rf /usr/share/nginx/html/*  &>> /tmp/frontend.log
-
-echo -e -n  "\e[33m Downloading ${component} content: \e[0m"
-curl -sS --fail -o /tmp/${component}.zip ${appContent} &>> ${appLog}
+echo "-e -n  "\e[33m Cleaning up proxy: \e[0m"
+>>/etc/nginx/nginx.conf &>> ${appLog}
 stat $?
-
-cd /usr/share/nginx/html 
-unzip /tmp/${component}.zip &>> ${appLog}
-
-
-rm -f /etc/nginx/nginx.conf &>> ${appLog}
 
 echo -e -n  "\e[33m Updating nginx Proxy: \e[0m"
 curl ${url} > /etc/nginx/nginx.conf
