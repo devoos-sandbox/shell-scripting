@@ -32,12 +32,4 @@ systemctl enable mongod &>> ${appLog}
 systemctl start mongod &>> ${appLog}
 stat $?
 
-echo -e -n  "\e[33m Installing Mongodb Shell: \e[0m"
-dnf install mongodb-mongosh -y &>> ${appLog}
-stat $?
-
-echo -e -n "\e[32m Injecting App Schema \e[0m"
-mongosh --host mongodb.roboshop.internal  </app/db/master-data.js &>> ${appLog}
-stat $?
-
 echo -e -n  "\n\n \t \e[32m ${component} setup completed \e[0m"
