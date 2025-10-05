@@ -44,7 +44,7 @@ creating_app_user() {
 
 configure_and_start_service() {
     echo -e -n "\e[33m Configuring ${component} systemd: \e[0m"
-    cp "$(cd "$(dirname "$0")" && pwd)/${component}.service" /etc/systemd/system/${component}.service
+    cp "$(dirname "$0")/${component}.service" /etc/systemd/system/${component}.service
     stat $?
 
     echo -e -n "\e[33m Starting ${component}: \e[0m"
