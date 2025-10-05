@@ -5,7 +5,7 @@ stat() {
     echo -e "\e[32m Success \e[0m"
   else
     echo -e "\e[31m Failure \e[0m"
-    echo -e "\e[33m Check the log file /tmp/frontend.log for more information \e[0m"
+    echo -e "\e[33m Check the log file /tmp/${component}.log for more information \e[0m"
     exit 1
   fi
 }
