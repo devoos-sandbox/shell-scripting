@@ -39,4 +39,9 @@ systemctl enable redis &>> "${appLog}"
 systemctl start redis &>> "${appLog}"
 stat $?
 
-echo -e "\n\n\t\e[32m ${component} setup completed \e[0m"
+echo -e "\n\n\t\e[1;32m✅✅✅ ${component^^} SETUP COMPLETED SUCCESSFULLY! ✅✅✅\e[0m\n"
+echo -e "\e[1;33mYour Redis server is running on default port 6379\e[0m"
+echo -e "\e[1;33mUse the command 'redis-cli' to connect to the Redis server\e[0m"
+echo -e "\e[1;33mFor more information, visit: https://redis.io/docs/getting-started/installation/\e[0m"
+echo -e "\e[1;33mTo manage the Redis service, use: systemctl [start|stop|status] redis\e[0m"
+echo -e "\e[1;33mCheck the log file /tmp/${component}.log for more details.\e[0m"      
