@@ -30,7 +30,7 @@ echo -e -n "\e[33m Cleaning up proxy: \e[0m"
 stat $?
 
 echo -e -n  "\e[33m Updating nginx Proxy: \e[0m"
-curl ${url} > /etc/nginx/nginx.conf
+curl -sS --fail ${url} -o /etc/nginx/nginx.conf &>> ${appLog}
 stat $?
 
 echo -e -n  "\e[33m Updating ${component} Configuration: \e[0m"
