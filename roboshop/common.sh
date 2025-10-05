@@ -39,9 +39,13 @@ creating_app_user() {
 
 configure_and_start_service() {
     echo -e -n "\e[33m Configuring ${component} systemd: \e[0m"
-    ls -ltr "$(dirname "$0")"
-    cp "$(dirname "$0")/${component}.service" /etc/systemd/system/${component}.service
-    stat $?
+    if [ -f "$(dirname "$0")/${component}.service" ]; then
+      cp "$(dirname "$0")/${component}.service" /etc/systemd/system/${component}.service
+      stat $?
+    else
+      echo -e "\e[31m Service file $(dirname "$0")/${component}.service not found \e[0m"
+      exit 1
+    fi
 
     echo -e -n "\e[33m Starting ${component}: \e[0m"
     systemctl daemon-reload &>> ${appLog}
