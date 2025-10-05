@@ -57,9 +57,8 @@ stat $?
 
 
 echo -e -n "\e[33m Configuring ${component} systemd: \e[0m"
-cp ~/shell-scripting/roboshop/${component}.service /etc/systemd/system/${component}.service
-ls -ltr
-stat $? 
+cp ${component}.service /etc/systemd/system/${component}.service &>> ${appLog}
+stat $?
 
 echo -e -n  "\e[33m Starting ${component}: \e[0m"
 systemctl daemon-reload &>> ${appLog}
