@@ -16,8 +16,8 @@ appLog="/tmp/${component}.log"
 appUser="roboshop"
 
 echo -e -n "\e[33m Disabling default nodeVersion : \e[0m"
-dnf module disable nodejs -y &>> ${appLog}
-dnf module enable nodejs:20 -y &>> ${appLog}
+dnf module disable nodejs -y || true &>> ${appLog}
+dnf module enable nodejs:20 -y || true &>> ${appLog}
 stat $?
 
 echo -e -n "\e[33m Installing nodejs: \e[0m"
