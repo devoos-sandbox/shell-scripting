@@ -13,6 +13,13 @@ stat() {
   fi
 }
 
+configure_systemd() {
+    echo -e -n "\e[33m Configuring ${component} systemd: \e[0m"
+    cp ${component}.service /etc/systemd/system/${component}.service
+    stat $?
+}
+
+
 downloading_app_content() {
     echo -e -n  "\e[33m Downloading ${component} content: \e[0m"
     curl -sS --fail -o /tmp/${component}.zip ${appContent} &>> ${appLog}
@@ -21,8 +28,7 @@ downloading_app_content() {
     echo -e -n  "\e[33m Extracting ${component} content: \e[0m"
     rm  -rf ${appDir} &>> ${appLog}
     mkdir ${appDir} &>> ${appLog}
-    cd ${appDir}
-    unzip -o /tmp/${component}.zip &>> ${appLog}
+    unzip -o /tmp/${component}.zip -d ${appDir} &>> ${appLog}
     stat $?
 }   
 
@@ -30,28 +36,18 @@ creating_app_user() {
     echo -e -n "\e[33m Creating AppUser: \e[0m"
     id ${appUser} &>> ${appLog}
     if [ $? -ne 0 ]; then
-    useradd ${appUser} &>> ${appLog}
-    stat $?
+        useradd ${appUser} &>> ${appLog}
+        stat $?
     else
-    echo -e "\e[32m ${appUser} user already exists: SKIPPING \e[0m"
+        echo -e "\e[32m ${appUser} user already exists: SKIPPING \e[0m"
     fi
 }   
 
-configure_and_start_service() {
-    echo -e -n "\e[33m Configuring ${component} systemd: \e[0m"
-    SERVICE_FILE="$(dirname "$0")/../systemd/${component}.service"
-    if [ -f "$SERVICE_FILE" ]; then
-      cp "$SERVICE_FILE" /etc/systemd/system/${component}.service
-      stat $?
-    else
-      echo -e "\e[31m Service file $SERVICE_FILE not found \e[0m"
-      exit 1
-    fi
-
+start_service() {
     echo -e -n "\e[33m Starting ${component}: \e[0m"
     systemctl daemon-reload &>> ${appLog}
     systemctl enable ${component} &>> ${appLog}
-    systemctl start ${component} &>> ${appLog}
+    systemctl restart ${component} &>> ${appLog}
     stat $?
 }   
 
@@ -87,7 +83,8 @@ nodejs() {
     npm install &>> ${appLog}
     stat $?
 
-    configure_and_start_service
+    configure_systemd
+    start_service
 
     message
 }
