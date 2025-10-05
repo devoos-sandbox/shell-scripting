@@ -44,7 +44,7 @@ mkdir /app &>> ${appLog}
 stat $?
 
 echo -e -n "\e[33m Configuring ${component} systemd: \e[0m"
-cp ${component}.service /etc/systemd/system/${component}.service
+cp "$(dirname "$0")/${component}.service" /etc/systemd/system/${component}.service
 stat $?
 
 exho -e -n  "\e[33m Downloading ${component} content: \e[0m"
