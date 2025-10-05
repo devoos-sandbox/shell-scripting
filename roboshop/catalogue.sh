@@ -17,7 +17,7 @@ appUser="roboshop"
 mongodbRepo="https://raw.githubusercontent.com/devoos-sandbox/shell-scripting/refs/heads/main/roboshop/mongodb.repo"
 
 echo -e -n "\e[33m Disabling default nodeVersion : \e[0m"
-dnf module disable nodejs -y &>> ${appLog}
+dnf module disable nodejs -y &>> ${appLog} &>> ${appLog}
 dnf module enable nodejs:20 -y &>> ${appLog}
 stat $?
 
