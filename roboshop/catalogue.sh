@@ -1,10 +1,11 @@
 #!/bin/bash
 
-source roboshop/common.sh
 
 component="catalogue"
 # Override variables
 mongodbRepo="https://raw.githubusercontent.com/devoos-sandbox/shell-scripting/refs/heads/main/roboshop/mongodb.repo"
+
+source roboshop/common.sh
 
 nodejs
 
@@ -19,3 +20,5 @@ stat $?
 echo -e -n "\e[32m Injecting App Schema \e[0m"
 mongosh --host mongodb.roboshop.internal </app/db/master-data.js &>> ${appLog}
 stat $?
+
+message
