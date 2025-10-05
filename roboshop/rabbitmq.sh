@@ -33,7 +33,7 @@ systemctl start rabbitmq-server &>> ${appLog}
 stat $?
 
 echo -e -n "\e[33m Configuring RabbitMQ Permissions: \e[0m"
-rabbitmqctl add_user ${appUser} roboshop123 || true &>> ${appLog}
+rabbitmqctl add_user ${appUser} roboshop123 &>> ${appLog} || true 
 rabbitmqctl set_permissions -p / ${appUser} ".*" ".*" ".*" &>> ${appLog}
 stat $?
 
