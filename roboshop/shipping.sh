@@ -82,7 +82,7 @@ stat $?
 
 echo -e "\n\n\t\e[32m ${component} setup completed \e[0m"
 echo -e "\e[36m------------------------------------------------------\e[0m"
-echo -e "\e[36m Service Name   : ${component}\e[0m
+echo -e "\e[36m Service Name   : ${component}\e[0m"
 echo -e "\e[36m Log File       : ${appLog}\e[0m"
 echo -e "\e[36m MySQL Host     : mysql.roboshop.internal\e[0m"
 echo -e "\e[36m------------------------------------------------------\e[0m"
