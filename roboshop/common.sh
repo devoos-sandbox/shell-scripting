@@ -14,8 +14,12 @@ stat() {
 }
 
 configure_systemd() {
+    # echo -e -n "\e[33m Configuring ${component} systemd: \e[0m"
+    # cp ${component}.service /etc/systemd/system/${component}.service
+    # stat $?
+
     echo -e -n "\e[33m Configuring ${component} systemd: \e[0m"
-    cp ${component}.service /etc/systemd/system/${component}.service
+    cp "$(dirname "$0")/${component}.service" /etc/systemd/system/${component}.service
     stat $?
 }
 
