@@ -9,7 +9,7 @@ appDir="/app"
 # Override variables
 mongodbRepo="https://raw.githubusercontent.com/devoos-sandbox/shell-scripting/refs/heads/main/roboshop/mongodb.repo"
 
-source common.sh
+source roboshop/common.sh
 
 nodejs
 
