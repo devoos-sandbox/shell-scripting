@@ -19,7 +19,7 @@ configure_systemd() {
     # stat $?
 
     echo -e -n "\e[33m Configuring ${component} systemd: \e[0m"
-    cp "$(dirname "$0")/${component}.service" /etc/systemd/system/${component}.service
+    cp "$(dirname "$0")/${component}.service" /etc/systemd/system/${component}.service 2>/dev/null || cp "roboshop/${component}.service" /etc/systemd/system/${component}.service
     stat $?
 }
 
