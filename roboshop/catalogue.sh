@@ -24,5 +24,3 @@ stat $?
 echo -e -n "\e[32m Injecting App Schema \e[0m"
 mongosh --host mongodb.roboshop.internal </app/db/master-data.js &>> ${appLog}
 stat $?
-
-message
