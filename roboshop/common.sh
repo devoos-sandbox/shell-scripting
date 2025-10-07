@@ -111,3 +111,24 @@ maven() {
   start_service
 
 }
+
+python() {
+
+  echo -e -n "\e[33m Installing python3 & dependencies: \e[0m"
+  dnf install python3 gcc python3-devel -y &>> ${appLog}
+  stat $?
+
+  creating_app_user
+
+  downloading_app_content
+
+  echo -e -n "\e[33m Installing ${component} dependencies: \e[0m"
+  cd /app
+  pip3 install -r requirements.txt &>> ${appLog}
+  stat $?
+
+  configure_systemd
+  start_service
+
+  message
+}
