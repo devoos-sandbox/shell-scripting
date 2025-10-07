@@ -14,14 +14,8 @@ stat() {
 }
 
 configure_systemd() {
-    # echo -e -n "\e[33m Configuring ${component} systemd: \e[0m"
-    # cp ${component}.service /etc/systemd/system/${component}.service
-    # stat $?
 
     echo -e -n "\e[33m Configuring ${component} systemd: \e[0m"
-    # cp "$(dirname "$0")/${component}.service" /etc/systemd/system/${component}.service 2>/dev/null || cp "roboshop/${component}.service" /etc/systemd/system/${component}.service
-    # stat $?
-    
     curl -sS --fail -o /etc/systemd/system/${component}.service https://raw.githubusercontent.com/devoos-sandbox/shell-scripting/refs/heads/main/roboshop/${component}.service &>> ${appLog}
     stat $?
 }
@@ -113,6 +107,7 @@ maven() {
   mv target/shipping-1.0.jar shipping.jar     &>> ${appLog}
   stat $?
 
+  configure_systemd
   start_service
 
 }
