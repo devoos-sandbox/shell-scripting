@@ -20,7 +20,6 @@ configure_systemd() {
     stat $?
 }
 
-
 downloading_app_content() {
     echo -e -n  "\e[33m Downloading ${component} content: \e[0m"
     curl -sS --fail -o /tmp/${component}.zip ${appContent} &>> ${appLog}
@@ -89,7 +88,6 @@ nodejs() {
 
     message
 }
-
 
 maven() {
 

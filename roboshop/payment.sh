@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 component="payment"
 appContent="https://roboshop-artifacts.s3.amazonaws.com/${component}-v3.zip"
 appLog="/tmp/${component}.log"
