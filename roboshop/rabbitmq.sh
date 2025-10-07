@@ -2,7 +2,7 @@
 
 component="rabbitmq"
 appLog="/tmp/${component}.log"
-appuser="roboshop"
+appUser="roboshop"
 
 source roboshop/common.sh
 
