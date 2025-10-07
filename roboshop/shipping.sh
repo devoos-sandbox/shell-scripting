@@ -1,62 +1,16 @@
 #!/bin/bash
 
-stat() {
-  if [ $1 -eq 0 ]; then
-    echo -e "\e[32m Success \e[0m"
-  else
-    echo -e "\e[31m Failure \e[0m"
-    echo -e "\e[33m Check the log file /tmp/${component}.log for more information \e[0m"
-    exit 1
-  fi
-}
-
-if [ $(id -u) -ne 0 ]; then
-  echo -e "\e[31m You should be running this script as root or with sudo privileges \e[0m"
-  exit 1
-fi
 
 component="shipping"
 appContent="https://roboshop-artifacts.s3.amazonaws.com/${component}-v3.zip"
 appLog="/tmp/${component}.log"
 appUser="roboshop"
+appDir="/app"
+# Override variables
 
-echo -e -n "\e[33m Installing maven: \e[0m"
-dnf install maven -y &>> ${appLog}
-stat $?
+source roboshop/common.sh
 
-
-echo -e -n "\e[33m Creating AppUser: \e[0m"
-id ${appUser} &>> ${appLog}
-if [ $? -ne 0 ]; then
-  useradd ${appUser} &>> ${appLog}
-  stat $?
-else
-  echo -e "\e[32m ${appUser} user already exists: SKIPPING \e[0m"
-fi
-
-echo -e -n "\e[33m Cleanup of app directory: \e[0m"
-rm -rf /app &>> ${appLog}
-stat $?
-
-echo -e -n "\e[33m Creating App Directory: \e[0m"
-mkdir /app &>> ${appLog}
-stat $?
-
-echo -e -n "\e[33m Configuring ${component} systemd: \e[0m"
-cp "$(dirname "$0")/${component}.service" /etc/systemd/system/${component}.service
-stat $?
-
-echo -e -n "\e[33m Downloading & Extracting ${component} content: \e[0m"
-curl -sS --fail -o /tmp/${component}.zip ${appContent} &>> ${appLog}
-cd /app
-unzip -o /tmp/${component}.zip &>> ${appLog}
-stat $?
-
-echo -e -n "\e[33m Building ${component} Application: \e[0m"
-cd /app 
-mvn clean package  &>> ${appLog}
-mv target/shipping-1.0.jar shipping.jar     &>> ${appLog}
-stat $?
+maven
 
 echo -e -n "\e[33m Installing mysql client: \e[0m"
 dnf install mysql -y &>> ${appLog}

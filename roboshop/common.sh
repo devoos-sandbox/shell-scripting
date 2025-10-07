@@ -97,3 +97,22 @@ nodejs() {
 }
 
 
+maven() {
+
+  echo -e -n "\e[33m Installing maven: \e[0m"
+  dnf install maven -y &>> ${appLog}
+  stat $?
+
+  creating_app_user
+
+  downloading_app_content
+
+  echo -e -n "\e[33m Building ${component} Application: \e[0m"
+  cd /app 
+  mvn clean package  &>> ${appLog}
+  mv target/shipping-1.0.jar shipping.jar     &>> ${appLog}
+  stat $?
+
+  start_service
+
+}
